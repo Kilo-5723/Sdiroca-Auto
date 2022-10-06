@@ -8,6 +8,8 @@ import win32con
 import time
 # import pyautogui
 
+# scr.view_all()
+
 scr.lock_window("BlueStacks Keymap Overlay")
 
 mouse = Controller()

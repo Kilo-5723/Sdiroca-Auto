@@ -4,7 +4,6 @@ location = (0, 0)
 size = (0, 0)
 detected = False
 
-
 def callback(hwnd, extra):
     global location, size, detected
     rect = win32gui.GetWindowRect(hwnd)
@@ -20,11 +19,24 @@ def callback(hwnd, extra):
         size = (w, h)
         detected = True
 
+def viewall_callback(hwnd, extra):
+    global location, size, detected
+    rect = win32gui.GetWindowRect(hwnd)
+    x = rect[0]
+    y = rect[1]
+    w = rect[2] - x
+    h = rect[3] - y
+    print("Window %s:" % win32gui.GetWindowText(hwnd))
+    print("\tLocation: (%d, %d)" % (x, y))
+    print("\t    Size: (%d, %d)" % (w, h))
+
 
 def lock_window(name):
     win32gui.EnumWindows(callback, name)
     return detected
 
+def view_all():
+    win32gui.EnumWindows(viewall_callback, None)
 
 def to_window_position(position):
     return ((position[0]-location[0])/size[0], (position[1]-location[1])/size[1])
